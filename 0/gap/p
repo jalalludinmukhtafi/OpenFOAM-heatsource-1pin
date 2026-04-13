@@ -1,0 +1,58 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2406                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    arch        "LSB;label=32;scalar=64";
+    class       volScalarField;
+    location    "0/fuel";
+    object      p;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+#include "$FOAM_CASE/constant/initialConditions"
+dimensions      [1 -1 -2 0 0 0 0];
+internalField   uniform $pInitial;
+outletPressure	uniform $pOutlet;
+
+boundaryField
+{	
+    wall-gap
+    {
+        type            zeroGradient;
+    }
+    contact_region-src
+    {
+        type            calculated;
+		value			$internalField;
+    }
+    contact_region_2-src
+    {
+        type            calculated;
+		value			$internalField;
+    }
+    contact_region_3-src
+    {
+        type            calculated;
+		value			$internalField;
+    }
+    gap_to_clad
+    {
+        type            calculated;
+		value			$internalField;
+    }
+    gap_to_fuel
+    {
+        type            calculated;
+		value			$internalField;
+    }
+}
+
+
+// ************************************************************************* //
