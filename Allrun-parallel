@@ -1,0 +1,19 @@
+#!/bin/sh
+cd "${0%/*}" || exit                                # Run from this directory
+. ${WM_PROJECT_DIR:?}/bin/tools/RunFunctions        # Tutorial run functions
+#------------------------------------------------------------------------------
+// echo "=== topoSet region==="
+// topoSet -region fuel
+
+echo "=== decompose==="
+decomposePar -allRegions
+
+echo "=== running ==="
+mpirun --oversubscribe -np 30 chtMultiRegionSimpleFoam -parallel 2>&1 | tee -a log.foam
+
+echo "=== reconstruct==="
+reconstructPar -allRegions
+
+echo "=== Selesai ==="
+
+#------------------------------------------------------------------------------
