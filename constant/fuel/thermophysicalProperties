@@ -1,0 +1,53 @@
+/*--------------------------------*- C++ -*----------------------------------* \
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2406                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      thermophysicalProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+thermoType
+{
+    type            heSolidThermo;
+    mixture         pureMixture;
+    transport       polynomial;
+    thermo          hPolynomial;
+    equationOfState icoPolynomial;
+    specie          specie;
+    energy          sensibleEnthalpy;
+}
+mixture //U(0,31)ZrH1,6 sumber: Olander, Los Alamos, Kakuchi
+{
+    specie
+    {
+        molWeight   166.557;   // [g/mol]
+    }
+//coba dibuat konstan
+    transport
+    {
+		kappaCoeffs<8>    (18 0 0 0 0 0 0 0); // W/mK artikel U(0,31)ZrH(1,6)aka Olander valid 300 - 1000 K
+    }
+
+    thermodynamics
+    {
+        Hf              0;                          // (J/kg)
+        Sf              0;
+        CpCoeffs<8>     (195.25 0.2117 0 0 0 0 0 0); // J/kgK, valid untuk 300 - 1000 K, Olander
+    }
+
+    equationOfState
+    {
+		rhoCoeffs<8>    (11430 0 0 0 0 0 0 0); // dari openmc, hasil UZrH1,6 + Er2O3 5000 ppm, kg/m3 artikel U(0,31)ZrH(1,6) valid untuk semua suhu
+    }
+}
+
+
+// ************************************************************************* //

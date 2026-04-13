@@ -1,0 +1,33 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  1.6.x                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    class       dictionary;
+    format      ascii;
+    location    "system";
+    object      fvOptions;
+}
+
+heatSource_1pin
+{
+    type            scalarSemiImplicitSource;
+    active          true;
+
+    scalarSemiImplicitSourceCoeffs
+    {
+        volumeMode      specific;
+        selectionMode   cellZone;
+        cellZone        fuel;
+
+        injectionRateSuSp
+        {
+            h           (1110000 0); // harusnya dari avg power density
+        }
+    }
+}
