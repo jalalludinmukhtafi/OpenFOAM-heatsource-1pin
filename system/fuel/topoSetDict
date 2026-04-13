@@ -1,0 +1,39 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2406                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+	version     2.0;
+	class       dictionary;
+	format      ascii;
+	location    "system";
+	object      topoSetDict;
+}
+
+actions
+(
+    // 1pin
+    {
+        name    pincells;
+        type    cellSet;
+        action  new;
+        source  cylinderToCell;
+        sourceInfo
+        {
+            p1          (0 0.00000 0);
+            p2          (0 0.6000 0);
+            radius      0.0045;  // Radius 0,0045 mm
+        }
+    }
+    {
+        name    pinZone;
+        type    cellZoneSet;
+        action  new;
+        source  setToCellZone;
+        set pincells;
+    }
+);
